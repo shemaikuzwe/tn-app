@@ -1,0 +1,27 @@
+{
+  "name": "cli",
+  "module": "src/index.ts",
+  "type": "module",
+  "bin": {
+    "create-cli": "src/test.ts"
+  },
+  "scripts": {
+    "dev": "bun src/test.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "@types/fs-extra": "^11.0.4",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "execa": "^9.5.2",
+    "fs-extra": "^11.3.0",
+    "ora": "^8.1.1",
+    "url": "^0.11.4"
+  }
+}
