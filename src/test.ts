@@ -3,8 +3,10 @@
 import * as p from "@clack/prompts";
 import chalk from "chalk";
 import { options } from "./utils/data.ts";
-import { install } from "./utils/installDeps.ts";
+import { installDependencies } from "./utils/installDeps.ts";
 import { getCurrentDir } from "./utils/getCurrentDir.ts";
+import { copyFiles } from "./copy-files.ts";
+import { getUserPackageManger } from "./utils/package-manager.ts";
 
 async function main() {
   p.intro(chalk.bgBlue(" Project Setup"));
@@ -19,7 +21,7 @@ async function main() {
     },
     initialValue: getCurrentDir(),
   });
-  
+
   // Handle user cancellation
   if (p.isCancel(project)) {
     p.outro(chalk.yellow("Setup cancelled. See you later!"));
@@ -53,19 +55,19 @@ async function main() {
     p.outro(chalk.yellow("Setup cancelled. See you later!"));
     process.exit(0);
   }
+  await copyFiles("./");
+  const pkg = getUserPackageManger();
   const shouldProceed = await p.confirm({
-    message: "Do you want to proceed with the installation?",
+    message: `Do you want to proceed with ${pkg} install?`,
   });
-
-  if (p.isCancel(shouldProceed) || !shouldProceed) {
-    p.outro(chalk.yellow("Setup cancelled. See you later!"));
-    process.exit(0);
+  if (shouldProceed) {
+    await installDependencies("./", pkg);
   }
+  p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
 
   //try {
-  const deps = [...features];
-  await install(project, deps);
-  // await sleep(2000);
+  // const deps = [...features];
+  // await install(project, deps);
   // s.stop("Project configured successfully");
 
   // p.outro(

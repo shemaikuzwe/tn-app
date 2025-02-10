@@ -1,13 +1,7 @@
-import chalk from "chalk";
+import * as p from "@clack/prompts";
 import ora, { type Ora } from "ora";
 import { execa, type StdinOption } from "execa";
-import {
-  getUserPackageManger,
-  type UserPackageManager,
-} from "./package-manager.ts";
-import { logger } from "./logger.ts";
-import fs from "fs/promises";
-import { copyFiles } from "../copy-files.ts";
+import { type UserPackageManager } from "./package-manager.ts";
 const execWithSpinner = async (
   projectDir: string,
   pkgManager: UserPackageManager,
@@ -75,17 +69,11 @@ export const installDependencies = async (
   projectDir: string,
   pkg: UserPackageManager
 ) => {
-  logger.info("Installing dependencies...");
-
-  const installSpinner = await runInstallCommand(pkg, projectDir);
-
-  // If the spinner was used to show the progress, use succeed method on it
-  // If not, use the succeed on a new spinner
-  (installSpinner ?? ora()).succeed("Successfully installed dependencies!\n");
+  const spinner = p.spinner();
+  spinner.start();
+  await execa(pkg, ["install"], {
+    cwd: projectDir,
+    stderr: "inherit",
+  });
+  spinner.stop();
 };
-
-export async function install(projectName: string, deps: string[]) {
-  const pkg = getUserPackageManger();
-  // await copyFiles("./");
-  await installDependencies("./", pkg);
-}

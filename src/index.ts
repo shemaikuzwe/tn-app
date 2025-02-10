@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import * as readline from "node:readline";
+import { logger } from "./utils/logger";
 
 const program = new Command();
 
@@ -15,9 +16,8 @@ program
   .description("A simple CLI app using Commander and Chalk")
   .argument("[dir]", "The name of the application and directory")
   .argument(
-    "--primsa [boolean]",
+    "--prisma [boolean]",
     "Initialize prisma",
     (value) => !!value && value !== "false"
   )
-
   .parse(process.argv);
