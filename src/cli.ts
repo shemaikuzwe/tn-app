@@ -2,7 +2,7 @@ import * as p from "@clack/prompts";
 import chalk from "chalk";
 import { options, type Config } from "./utils/data.ts";
 import { installDependencies } from "./utils/installDeps.ts";
-import { createDir, getCurrentDir } from "./utils/getCurrentDir.ts";
+import { createDir, getCurrentDir } from "./utils/fs.ts";
 import { copyFiles } from "./copy-files.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
 export async function noaCli(defaults: Config) {
@@ -26,6 +26,7 @@ export async function noaCli(defaults: Config) {
       process.exit(0);
     }
     const projectDir = await createDir(project);
+    defaults.directory = projectDir;
   }
   if (!defaults.orm) {
     const ORM = await p.select({
