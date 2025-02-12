@@ -1,23 +1,52 @@
+#!/usr/bin/env bun
+
 import { Command } from "commander";
-import chalk from "chalk";
-import * as readline from "node:readline";
-import { logger } from "./utils/logger";
+import { config } from "./utils/data";
+import { noaCli } from "./cli";
+import { createDir } from "./utils/getCurrentDir";
 
-const program = new Command();
+async function main() {
+  const program = new Command();
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+  program
+    .version("1.0.0")
+    .name("noa-stack")
+    .description(
+      "NOA stack,quickly spin up next js project with the stack you love"
+    )
+    .argument("[dir]", "The name of the application and directory")
+    .option("-O, --orm <value>", "ORM you want to use prisma or drizzle")
+    .option("-S,--shadcn <boolean>", "Add shadcn ui", false)
+    .option("-A,--authjs <boolean>", "Add authjs for authentication", false);
 
-program
-  .version("1.0.0")
-  .name("cli")
-  .description("A simple CLI app using Commander and Chalk")
-  .argument("[dir]", "The name of the application and directory")
-  .argument(
-    "--prisma [boolean]",
-    "Initialize prisma",
-    (value) => !!value && value !== "false"
-  )
-  .parse(process.argv);
+  let parsed: any;
+
+  try {
+    parsed = program.parse(process.argv);
+    const options = program.opts();
+    const [dir] = program.args;
+
+    if (dir) {
+      const projectDir = await createDir(dir);
+      if (projectDir) {
+        config.directory = projectDir;
+      }
+    }
+
+    config.shadcn = options.shadcn;
+    config.authjs = options.authjs;
+    config.orm =
+      options.orm == "prisma"
+        ? "prisma"
+        : options.orm == "drizzle"
+        ? "drizzle"
+        : null;
+
+    await noaCli(config);
+  } catch (error) {
+    console.error("Error:", error);
+    process.exit(1);
+  }
+}
+
+main();
