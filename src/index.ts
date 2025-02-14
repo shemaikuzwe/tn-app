@@ -4,7 +4,8 @@ import { Command } from "commander";
 import { config } from "./utils/data";
 import { noaCli } from "./cli";
 import { createDir } from "./utils/fs";
-
+import * as p from "@clack/prompts";
+import chalk from "chalk";
 async function main() {
   const program = new Command();
 
@@ -53,7 +54,7 @@ async function main() {
         : options.orm == "drizzle"
         ? "drizzle"
         : null;
-
+    p.intro(chalk.bgBlue(" Project Setup"));
     await noaCli(config);
   } catch (error) {
     console.error("Error:", error);

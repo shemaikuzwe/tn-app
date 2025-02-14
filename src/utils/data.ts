@@ -15,7 +15,7 @@ const config = {
   directory: null as null | string,
   orm: <null | "drizzle" | "prisma">null,
   shadcn: false,
-  authjs: false,
+  authjs: false
 };
 
 export type Config = typeof config;

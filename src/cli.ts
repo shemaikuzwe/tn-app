@@ -5,9 +5,8 @@ import { installDependencies } from "./utils/installDeps.ts";
 import { createDir, getCurrentDir } from "./utils/fs.ts";
 import { copyFiles } from "./copy-files.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
+import { logger } from "./utils/logger.ts";
 export async function noaCli(defaults: Config) {
-  p.intro(chalk.bgBlue(" Project Setup"));
-
   if (defaults.directory == null) {
     const project = await p.text({
       message: "What is your project named?",
@@ -65,6 +64,7 @@ export async function noaCli(defaults: Config) {
   const selectFeatures = features.filter(Boolean);
   defaults.authjs = selectFeatures.includes("auth_js");
   defaults.shadcn = selectFeatures.includes("shadcn_ui");
+
   await copyFiles(defaults);
   const pkg = getUserPackageManger();
   const shouldProceed = await p.confirm({

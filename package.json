@@ -2,6 +2,7 @@
   "name":"noa-stack",
   "module": "src/index.ts",
   "type": "module",
+  "license":"MIT",
   "bin": {
     "create-noa-stack": "src/index.ts"
   },

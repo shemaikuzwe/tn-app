@@ -2,16 +2,16 @@ import path from "path";
 import { logger } from "./logger";
 import fs from "fs-extra";
 import * as p from "@clack/prompts";
+import chalk from "chalk";
 export function getCurrentDir() {
   const currDir = process.cwd();
   const dirName = path.basename(currDir);
 
   return dirName;
 }
-
 export async function createDir(name: string) {
   const projectDir = path.resolve(process.cwd(), name);
-  if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
+  if (name !== "." && !/^[a-zA-Z0-9_-]+$/.test(name)) {
     logger.error(
       "Project name must contain only letters, numbers, hyphens, and underscores."
     );
@@ -20,7 +20,7 @@ export async function createDir(name: string) {
 
   try {
     if ((await fs.exists(projectDir)) && name !== ".") {
-      const overWrite = p.confirm({
+      const overWrite = await p.confirm({
         message: `Would you like to overwrite ${name}`,
         initialValue: false,
       });
@@ -32,6 +32,19 @@ export async function createDir(name: string) {
       }
     }
     await fs.ensureDir(projectDir);
+    if (!(await isDirectoryEmpty(projectDir))) {
+      const deleteDir = await p.confirm({
+        message:
+          "It looks like your directory contains files would you like to delete them",
+        initialValue: false,
+      });
+      if (deleteDir) {
+        await fs.emptyDir(projectDir);
+      } else {
+        p.outro(chalk.yellow("Setup cancelled. See you later!"));
+        process.exit(1);
+      }
+    }
     return projectDir;
   } catch {
     process.exit(1);
