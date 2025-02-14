@@ -1,8 +1,8 @@
 {
-  "name":"noa-stack",
+  "name": "noa-stack",
   "module": "src/index.ts",
   "type": "module",
-  "license":"MIT",
+  "license": "MIT",
   "bin": {
     "create-noa-stack": "src/index.ts"
   },
@@ -23,6 +23,8 @@
     "execa": "^9.5.2",
     "fs-extra": "^11.3.0",
     "ora": "^8.1.1",
+    "sort-package-json": "^2.14.0",
+    "type-fest": "^4.34.1",
     "url": "^0.11.4"
   }
 }

@@ -1,10 +1,18 @@
+import type { Metadata } from "next";
+import "./globals.css";
 
-
-
-interface Props{
-    children:React.ReactNode
+export const metadata: Metadata = {
+  title: "NOA stack",
+  description: "Generate with NOA stack ",
+};
+export default function Layout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
 }
-export default function Layout({children}:Props){
-
-}
-

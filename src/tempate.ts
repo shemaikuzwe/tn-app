@@ -10,5 +10,7 @@ export function getTemplateDir() {
   const next = path.join(templateDir, "/template/next");
   const drizzle = path.join(templateDir, "/template/drizzle");
   const prisma = path.join(templateDir, "/template/prisma");
-  return { next, drizzle, prisma };
+  const auth_api = path.join(templateDir, "/template/auth-api");
+  const auth = path.join(templateDir, "/template/authjs");
+  return { next, drizzle, prisma, auth_api, auth };
 }

@@ -8,7 +8,7 @@ import * as p from "@clack/prompts";
 import chalk from "chalk";
 async function main() {
   const program = new Command();
-
+  p.intro(chalk.bgBlue(" Project Setup"));
   program
     .version(
       "1.0.0",
@@ -54,7 +54,6 @@ async function main() {
         : options.orm == "drizzle"
         ? "drizzle"
         : null;
-    p.intro(chalk.bgBlue(" Project Setup"));
     await noaCli(config);
   } catch (error) {
     console.error("Error:", error);
