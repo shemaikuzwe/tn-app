@@ -30,9 +30,11 @@ export const depsVersion = {
   "@planetscale/database": "^1.19.0",
   postgres: "^3.4.4",
   "@libsql/client": "^0.9.0",
-
-  // TailwindCSS
-  tailwindcss: "^3.4.3",
-  postcss: "^8.4.39",
+  "@neondatabase/serverless": "0.10.4",
+  //shadcn ui
+  "lucide-react": "^0.474.0",
+  clsx: "^2.1.1",
+  "class-variance-authority": "^0.7.1",
+  "@radix-ui/react-slot": "^1.1.1",
 } as const;
 export type Deps = keyof typeof depsVersion;

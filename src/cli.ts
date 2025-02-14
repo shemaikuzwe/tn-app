@@ -3,9 +3,8 @@ import chalk from "chalk";
 import { options, type Config } from "./utils/data.ts";
 import { installDependencies } from "./utils/installDeps.ts";
 import { createDir, getCurrentDir } from "./utils/fs.ts";
-import { copyFiles } from "./copy-files.ts";
+import { copyFiles } from "./installer/index.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
-import { logger } from "./utils/logger.ts";
 export async function noaCli(defaults: Config) {
   if (defaults.directory == null) {
     const project = await p.text({
@@ -72,7 +71,8 @@ export async function noaCli(defaults: Config) {
   });
   if (shouldProceed) {
     await installDependencies("./", pkg);
+  }else{
+    p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
+    process.exit(0);
   }
-  p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
-  process.exit(0);
 }

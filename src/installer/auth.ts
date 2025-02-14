@@ -6,5 +6,5 @@ export async function authInstaller(projectDir: string) {
   const { auth_api,auth } = getTemplateDir();
   await fs.copy(auth_api, `${projectDir}/app`);
   await fs.copy(auth,projectDir)
-  addDeps(["next-auth", "@auth/core"], false, projectDir);
+  await addDeps(["next-auth", "@auth/core"], false, projectDir);
 }

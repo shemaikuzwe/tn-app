@@ -2,6 +2,7 @@ import * as p from "@clack/prompts";
 import ora, { type Ora } from "ora";
 import { execa, type StdinOption } from "execa";
 import { type UserPackageManager } from "./package-manager.ts";
+import chalk from "chalk";
 const execWithSpinner = async (
   projectDir: string,
   pkgManager: UserPackageManager,
@@ -76,4 +77,6 @@ export const installDependencies = async (
     stderr: "inherit",
   });
   spinner.stop();
+  p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
+  process.exit(0);
 };
