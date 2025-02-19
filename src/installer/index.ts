@@ -14,10 +14,7 @@ export async function copyFiles(defaults: Config) {
   }
   await fs.copy(next, defaults.directory);
   if (defaults.orm === "prisma") await prismaInstaller(defaults.directory);
-  if (defaults.orm === "drizzle") {
-    await drizzlerInstaller(defaults.directory);
-  
-  }
+  if (defaults.orm === "drizzle") await drizzlerInstaller(defaults.directory);
   if (defaults.authjs) await authInstaller(defaults.directory);
   if (defaults.shadcn) await shadcnInstaller(defaults.directory);
   logger.success("Copied files");

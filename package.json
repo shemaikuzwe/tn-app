@@ -1,16 +1,18 @@
 {
   "name": "noa-stack",
-  "module": "src/index.ts",
+  "module": "dist/index.js",
   "type": "module",
   "license": "MIT",
   "bin": {
-    "create-noa-stack": "src/index.ts"
+    "create-noa-stack": "dist/index.js"
   },
   "scripts": {
-    "dev": "bun src"
+    "dev": "tsup --watch",
+    "build": "tsup"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "tsup": "^8.3.6"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -20,6 +22,7 @@
     "@types/fs-extra": "^11.0.4",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
+    "esbuild-plugin-copy": "^2.1.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.3.0",
     "ora": "^8.1.1",
