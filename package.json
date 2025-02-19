@@ -4,10 +4,11 @@
   "type": "module",
   "license": "MIT",
   "bin": {
-    "create-noa-stack": "src/index.ts"
+    "create-noa-stack": "dist/index.ts"
   },
   "scripts": {
-    "dev": "bun src"
+    "dev": "bun src",
+    "build": "tsup"
   },
   "devDependencies": {
     "@types/bun": "latest",
