@@ -4,8 +4,8 @@ import { addDeps } from "../utils/addDeps";
 
 export async function shadcnInstaller(projectDir: string) {
   const { shadcn } = getTemplateDir();
-  await fs.copy(projectDir, shadcn);
-   await addDeps(
+  await fs.copy(shadcn, projectDir);
+  await addDeps(
     [
       "class-variance-authority",
       "clsx",
