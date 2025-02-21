@@ -13,19 +13,23 @@ async function main() {
     .version(
       "1.0.0",
       "-V,--v",
-      "Output the current version of create-noa-stack"
+      "Output the current version of create-tn-app"
     )
-    .name("noa-stack")
+    .name("tn-app")
     .description(
-      "NOA stack,quickly spin up next js project with the stack you love"
+      "TN app,quickly spin up next js project with the stack you love"
     )
     .argument("[dir]", "The name of the application and directory")
-    .option("-O, --orm <value>", "ORM you want to use prisma or drizzle")
+    .option(
+      "-O, --orm <value>",
+      "initialize with prisma or drizzle ORM installed"
+    )
     .option(
       "-S,--shadcn <boolean>",
       "Initialize  with shadcn ui installed",
       false
     )
+    .option("-D --db <value>", "Initialize with Database installed ")
     .option(
       "-A,--authjs <boolean>",
       "Initialize  with Auth js installed",
@@ -45,7 +49,6 @@ async function main() {
         config.directory = projectDir;
       }
     }
-
     config.shadcn = options.shadcn;
     config.authjs = options.authjs;
     config.orm =
@@ -53,6 +56,14 @@ async function main() {
         ? "prisma"
         : options.orm == "drizzle"
         ? "drizzle"
+        : null;
+    config.db =
+      options.db == "postgres"
+        ? "postgres"
+        : options.db == "neon postgres"
+        ? "neon-postgres"
+        : options.db == "vercel-postgres"
+        ? "vercel-postgres"
         : null;
     await noaCli(config);
   } catch (error) {

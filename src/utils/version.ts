@@ -25,12 +25,10 @@ export const depsVersion = {
   // Drizzle
   "drizzle-kit": "^0.24.0",
   "drizzle-orm": "^0.33.0",
-  "eslint-plugin-drizzle": "^0.2.3",
-  mysql2: "^3.11.0",
-  "@planetscale/database": "^1.19.0",
-  postgres: "^3.4.4",
-  "@libsql/client": "^0.9.0",
-  "@neondatabase/serverless": "0.10.4",
+  pg: "^8.13.3",
+  "@vercel/postgres": "0.10.0",
+  "@types/pg": "^8.11.11",
+  "@neondatabase/serverless": "^0.10.4",
   //shadcn ui
   "lucide-react": "^0.474.0",
   clsx: "^2.1.1",

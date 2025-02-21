@@ -2,7 +2,7 @@ import path from "path";
 import { fileURLToPath } from "node:url";
 
 export function getTemplateDir() {
-  const templatePackageName = "noa-stack";
+  const templatePackageName = "tn-app";
   const templatePackagePath = fileURLToPath(
     import.meta.resolve(templatePackageName)
   );

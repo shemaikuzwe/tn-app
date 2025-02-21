@@ -1,4 +1,4 @@
-import { getTemplateDir } from "../tempate";
+import { getTemplateDir } from "../template";
 import fs from "fs-extra";
 import { addDeps } from "../utils/addDeps";
 

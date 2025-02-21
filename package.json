@@ -1,5 +1,5 @@
 {
-  "name": "noa-stack",
+  "name": "tn-app",
   "module": "dist/index.js",
   "private": "true",
   "type": "module",
@@ -8,12 +8,16 @@
   "license": "MIT",
   "exports": "./dist/index.js",
   "bin": {
-    "create-noa-stack": "dist/index.js"
+    "create-tn-app": "dist/index.js"
   },
   "scripts": {
-    "dev": "bun src",
+    "dev": "tsup --watch",
     "build": "tsup"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "devDependencies": {
     "@types/bun": "latest",
     "tsup": "^8.3.6"

@@ -3,6 +3,7 @@ import ora, { type Ora } from "ora";
 import { execa, type StdinOption } from "execa";
 import { type UserPackageManager } from "./package-manager.ts";
 import chalk from "chalk";
+import { logger } from "./logger.ts";
 const execWithSpinner = async (
   projectDir: string,
   pkgManager: UserPackageManager,
@@ -77,6 +78,6 @@ export const installDependencies = async (
     stderr: "inherit",
   });
   spinner.stop();
-  p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
+  logger.success("project setup success");
   process.exit(0);
 };

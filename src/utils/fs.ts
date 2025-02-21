@@ -6,8 +6,12 @@ import chalk from "chalk";
 export function getCurrentDir() {
   const currDir = process.cwd();
   const dirName = path.basename(currDir);
-
   return dirName;
+}
+
+export  function getDirName(dir:string){
+  const dirName=path.basename(dir)
+  return dirName  
 }
 export async function createDir(name: string) {
   const projectDir = path.resolve(process.cwd(), name);
@@ -17,7 +21,7 @@ export async function createDir(name: string) {
     );
     process.exit(1);
   }
-
+   
   try {
     if ((await fs.exists(projectDir)) && name !== ".") {
       const overWrite = await p.confirm({

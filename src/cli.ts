@@ -1,10 +1,11 @@
 import * as p from "@clack/prompts";
 import chalk from "chalk";
-import { options, type Config } from "./utils/data.ts";
+import { dbOptions, ormOptions, type Config } from "./utils/data.ts";
 import { installDependencies } from "./utils/installDeps.ts";
 import { createDir, getCurrentDir } from "./utils/fs.ts";
 import { copyFiles } from "./installer/index.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
+import { logger } from "./utils/logger.ts";
 export async function noaCli(defaults: Config) {
   if (defaults.directory == null) {
     const project = await p.text({
@@ -29,7 +30,7 @@ export async function noaCli(defaults: Config) {
   if (!defaults.orm) {
     const ORM = await p.select({
       message: "which ORM would you like to use",
-      options,
+      options: ormOptions,
     });
 
     if (p.isCancel(ORM)) {
@@ -37,6 +38,18 @@ export async function noaCli(defaults: Config) {
       process.exit(0);
     }
     defaults.orm = ORM;
+  }
+  if (!defaults.db && defaults.orm) {
+    const Db = await p.select({
+      message: "which Database would you like to use",
+      options: dbOptions,
+    });
+
+    if (p.isCancel(Db)) {
+      p.outro(chalk.yellow("Setup cancelled. See you later!"));
+      process.exit(0);
+    }
+    defaults.db = Db;
   }
 
   const features = await p.multiselect({
@@ -71,8 +84,9 @@ export async function noaCli(defaults: Config) {
   });
   if (shouldProceed) {
     await installDependencies("./", pkg);
-  }else{
-    p.outro(chalk.green(chalk.green("✨ Project setup complete!\n")));
-    process.exit(0);
+    
   }
+
+  logger.success("project setup success");
+  process.exit(0);
 }
