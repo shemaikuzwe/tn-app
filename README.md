@@ -3,16 +3,16 @@
 ****
 create TN app is the best way to create Next js app
 
-- [x] Initialize ORM
+-  Initialize ORM
    * Drizzle
    * Prisma
-- [X] Initialize Database
+- Initialize Database
 
      * Postgres(local)
      * Neon Postgres
      * Vercel Postgres
-- [x] Initialize  shadcn
-- [x] Initiaze Auth js
+-  Initialize  shadcn
+-  Initiaze Auth js
 
 
 ***
