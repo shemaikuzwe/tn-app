@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NOA stack",
-  description: "Generate with NOA stack ",
+  title: "TN App",
+  description: "Generate with TN App ",
 };
 export default function Layout({
   children,
@@ -12,7 +12,7 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="antialiased ">{children}</body>
     </html>
   );
 }

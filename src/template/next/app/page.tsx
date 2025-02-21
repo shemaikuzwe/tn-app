@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default function page() {
   return (
-    <main className="min-h-screen bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
+    <main className="h-screen bg-black/[0.96] bg-grid-white/[0.02] overflow-hidden">
       <div className="relative z-10">
         <nav className="flex items-center justify-between px-6 py-4 backdrop-blur-sm border-b border-white/10">
           <Link href="/" className="flex items-center space-x-2">
             <Image src={"/bot.png"} alt="bot" width={50} height={50} />
-            <span className="text-white font-medium text-xl">NOA stack</span>
+            <span className="text-white font-medium text-xl">TN App</span>
           </Link>
         </nav>
         <div className="relative min-h-[calc(100vh-76px)] flex items-center">
@@ -18,7 +18,7 @@ export default function Home() {
                 <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
                   Create Production Ready Apps with
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
-                    NOA stack
+                    TN Stack
                   </span>
                 </h1>
                 <span className=" text-2xl text-white">(Next,ORM,Auth)</span>
@@ -41,8 +41,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* Animated robot */}
           <div className="absolute bottom-0 right-0 w-96 h-96">
             <div className="relative w-full h-full">
               <div className="absolute inset-0 flex items-center justify-center">

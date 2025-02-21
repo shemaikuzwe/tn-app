@@ -1,15 +1,29 @@
-# cli
+## TN APP
 
-To install dependencies:
+****
+create TN app is the best way to create Next js app
 
-```bash
-bun install
+- [x] Initialize ORM
+   * Drizzle
+   * Prisma
+- [X] Initialize Database
+
+     * Postgres(local)
+     * Neon Postgres
+     * Vercel Postgres
+- [x] Initialize  shadcn
+- [x] Initiaze Auth js
+
+
+***
+
+### How to use
+
+1. Install
+ ```bash
+pnpm i -g tn-app
 ```
-
-To run:
-
-```bash
-bun run index.ts
+2. Create TN App
 ```
-
-This project was created using `bun init` in bun v1.1.42. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+pnpm create-tn-app
+```
