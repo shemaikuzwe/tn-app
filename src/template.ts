@@ -12,5 +12,6 @@ export function getTemplateDir() {
   const prisma = path.join(templateDir, "/template/prisma");
   const auth = path.join(templateDir, "/template/auth");
   const shadcn = path.join(templateDir, "/template/shadcn");
+
   return { next, drizzle, prisma, auth, shadcn };
 }

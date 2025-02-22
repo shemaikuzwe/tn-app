@@ -83,8 +83,7 @@ export async function noaCli(defaults: Config) {
     message: `Do you want to proceed with ${pkg} install?`,
   });
   if (shouldProceed) {
-    await installDependencies("./", pkg);
-    
+    await installDependencies(defaults.directory, pkg);
   }
 
   logger.success("project setup success");

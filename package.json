@@ -20,6 +20,7 @@
   ],
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/fs-extra": "^11.0.4",
     "tsup": "^8.3.6"
   },
   "peerDependencies": {
@@ -27,7 +28,6 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.9.1",
-    "@types/fs-extra": "^11.0.4",
     "chalk": "^5.4.1",
     "commander": "^13.1.0",
     "execa": "^9.5.2",
@@ -36,5 +36,8 @@
     "sort-package-json": "^2.14.0",
     "type-fest": "^4.34.1",
     "url": "^0.11.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/" 
   }
 }

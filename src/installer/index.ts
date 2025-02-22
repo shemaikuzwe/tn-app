@@ -14,12 +14,13 @@ export async function copyFiles(defaults: Config) {
     process.exit(1);
   }
   await fs.copy(next, defaults.directory);
-  await changePkgName(defaults.directory);
+
   if (defaults.orm === "prisma") await prismaInstaller(defaults.directory);
   if (defaults.orm === "drizzle") {
     await drizzleInstaller(defaults.directory, defaults.db);
   }
   if (defaults.authjs) await authInstaller(defaults.directory);
   if (defaults.shadcn) await shadcnInstaller(defaults.directory);
+  await changePkgName(defaults.directory);
   logger.success("Copied files");
 }
