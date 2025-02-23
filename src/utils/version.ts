@@ -1,6 +1,5 @@
 import { execa } from "execa";
 import { logger } from "./logger";
-
 async function getLatestVersion(packageName: string) {
   try {
     const result = await execa("npm", ["view", packageName, "version"]);
@@ -10,7 +9,6 @@ async function getLatestVersion(packageName: string) {
     process.exit(1);
   }
 }
-
 export const depsVersion = {
   // NextAuth.js
   "next-auth": "5.0.0-beta.25",

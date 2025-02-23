@@ -8,10 +8,10 @@ import * as p from "@clack/prompts";
 import chalk from "chalk";
 async function main() {
   const program = new Command();
-  p.intro(chalk.bgBlue(" Project Setup"));
+  p.intro(chalk.bgBlue("TN-APP"));
   program
     .version(
-      "1.0.0",
+      "0.0.1",
       "-V,--v",
       "Output the current version of create-tn-app"
     )

@@ -12,5 +12,4 @@ export default defineConfig({
     await fs.mkdir(distPath, { recursive: true });
     await fs.copy("./src/template", distPath);
   },
-  // publicDir: "./src/template",
 });

@@ -1,17 +1,19 @@
 import path from "path";
 import { fileURLToPath } from "node:url";
+import fs from "fs-extra";
+const distUrl = fileURLToPath(import.meta.resolve("tn-app"));
+export const ROOTDIR = path.join(distUrl, "../");
+// const packageJsonPath = path.join(ROOTDIR, "package.json");
+// const packageJsonContent = fs.readJSONSync(packageJsonPath);
+// export const VERSION = packageJsonContent.version ?? "1.0.0";
 
 export function getTemplateDir() {
-  const templatePackageName = "tn-app";
-  const templatePackagePath = fileURLToPath(
-    import.meta.resolve(templatePackageName)
-  );
-  const templateDir = path.dirname(templatePackagePath);
-  const next = path.join(templateDir, "/template/next");
-  const drizzle = path.join(templateDir, "/template/drizzle");
-  const prisma = path.join(templateDir, "/template/prisma");
-  const auth = path.join(templateDir, "/template/auth");
-  const shadcn = path.join(templateDir, "/template/shadcn");
+  const distPath = path.dirname(distUrl);
+  const next = path.join(distPath, "/template/next");
+  const drizzle = path.join(distPath, "/template/drizzle");
+  const prisma = path.join(distPath, "/template/prisma");
+  const auth = path.join(distPath, "/template/auth");
+  const shadcn = path.join(distPath, "/template/shadcn");
 
   return { next, drizzle, prisma, auth, shadcn };
 }
