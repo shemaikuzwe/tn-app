@@ -1,7 +1,6 @@
 {
   "name": "tn-app",
   "module": "dist/index.js",
-  "private": "true",
   "type": "module",
   "main": "dist/index.js",
   "version": "0.0.4",
@@ -40,9 +39,6 @@
     "sort-package-json": "^2.14.0",
     "type-fest": "^4.34.1",
     "url": "^0.11.4"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
