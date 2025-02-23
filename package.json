@@ -3,7 +3,7 @@
   "module": "dist/index.js",
   "type": "module",
   "main": "dist/index.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "license": "MIT",
   "description": "create-TN app is the best way to create Next js app",
   "exports": "./dist/index.js",
