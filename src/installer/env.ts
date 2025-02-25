@@ -33,8 +33,6 @@ export async function envInstaller(
     // Write modified content
     await fs.writeFile(destEnvPath, modifiedEnv.trim() + "\n", "utf-8");
     await fs.writeFile(destEnvExamplePath, modifiedEnvExample.trim() + "\n", "utf-8");
-
-    logger.success("Environment files created successfully");
   } catch (error) {
     logger.error("Error creating environment files:", error);
     throw error;
