@@ -7,6 +7,8 @@ import { drizzleInstaller } from "./drizzle";
 import { authInstaller } from "./auth";
 import { shadcnInstaller } from "./shadcn";
 import { changePkgName } from "../utils/changePkgName";
+import { t3EnvInstaller } from "./t3-env";
+import { envInstaller } from "./env";
 export async function copyFiles(defaults: Config) {
   const { next } = getTemplateDir();
   if (!defaults.directory) {
@@ -21,6 +23,17 @@ export async function copyFiles(defaults: Config) {
   }
   if (defaults.authjs) await authInstaller(defaults.directory);
   if (defaults.shadcn) await shadcnInstaller(defaults.directory);
+  if (defaults.authjs || defaults.orm) {
+    if (defaults.t3Env)
+      await t3EnvInstaller(defaults.directory, {
+        db: !!defaults.db,
+        auth: defaults.authjs,
+      });
+    await envInstaller(defaults.directory,{
+      db: !!defaults.db,
+      auth: defaults.authjs,
+    });
+  }
   await changePkgName(defaults.directory);
   logger.success("Copied files");
 }

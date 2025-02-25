@@ -77,6 +77,15 @@ export async function noaCli(defaults: Config) {
   defaults.authjs = selectFeatures.includes("auth_js");
   defaults.shadcn = selectFeatures.includes("shadcn_ui");
 
+  const t3Env = await p.confirm({
+    message: "Would you like to use t3-env?",
+    initialValue: false,
+  });
+  if (p.isCancel(t3Env)) {
+    p.outro(chalk.yellow("Setup cancelled. See you later!"));
+    process.exit(0);
+  }
+  defaults.t3Env = t3Env;
   await copyFiles(defaults);
   const pkg = getUserPackageManger();
   const shouldProceed = await p.confirm({

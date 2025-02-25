@@ -50,6 +50,7 @@ const config = {
   authjs: false,
   name: "new-app",
   db: null as null | "postgres" | "neon-postgres" | "vercel-postgres",
+  t3Env: false,
 };
 
 export type Config = typeof config;

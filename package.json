@@ -46,6 +46,7 @@
   },
   "keywords": [
     "create-tn-app",
+    "tn-app",
     "next.js",
     "shadcn",
     "next-auth",

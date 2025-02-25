@@ -14,6 +14,7 @@ export function getTemplateDir() {
   const prisma = path.join(distPath, "/template/prisma");
   const auth = path.join(distPath, "/template/auth");
   const shadcn = path.join(distPath, "/template/shadcn");
-
-  return { next, drizzle, prisma, auth, shadcn };
+  const t3env= path.join(distPath, "/template/t3-env");
+  const env= path.join(distPath, "/template/env");
+  return { next, drizzle, prisma, auth, shadcn,t3env,env };
 }
