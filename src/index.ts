@@ -6,15 +6,13 @@ import { noaCli } from "./cli";
 import { createDir } from "./utils/fs";
 import * as p from "@clack/prompts";
 import chalk from "chalk";
+import { logger } from "./utils/logger";
+import { VERSION } from "./template";
 async function main() {
   const program = new Command();
   p.intro(chalk.bgBlue("TN-APP"));
   program
-    .version(
-      "0.0.1",
-      "-V,--v",
-      "Output the current version of create-tn-app"
-    )
+    .version(VERSION, "-V,--v", "Output the current version of create-tn-app")
     .name("tn-app")
     .description(
       "TN app,quickly spin up next js project with the stack you love"

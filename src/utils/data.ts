@@ -42,16 +42,33 @@ const db: Db[] = [
     hint: "No database selected",
   },
 ];
+type Auth = {
+  value: typeof config.auth;
+  label: string;
+  hint: string;
+};
+const auth: Auth[] = [
+  {
+    value: "auth_js",
+    label: "Auth js",
+    hint: "Authentication Library",
+  },
+  {
+    value: null,
+    label: "None",
+    hint: "No Auth",
+  },
+];
 
 const config = {
   directory: null as null | string,
   orm: <null | "drizzle" | "prisma">null,
   shadcn: false,
-  authjs: false,
+  auth: null as null | "auth_js",
   name: "new-app",
   db: null as null | "postgres" | "neon-postgres" | "vercel-postgres",
   t3Env: false,
 };
 
 export type Config = typeof config;
-export { Orm as ormOptions, config, db as dbOptions };
+export { Orm as ormOptions, config, db as dbOptions,auth as authOptions };

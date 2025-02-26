@@ -2,10 +2,10 @@ import path from "path";
 import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
 const distUrl = fileURLToPath(import.meta.resolve("tn-app"));
-export const ROOTDIR = path.join(distUrl, "../");
-// const packageJsonPath = path.join(ROOTDIR, "package.json");
-// const packageJsonContent = fs.readJSONSync(packageJsonPath);
-// export const VERSION = packageJsonContent.version ?? "1.0.0";
+export const ROOTDIR = path.join(distUrl, "../../");
+const packageJsonPath = path.join(ROOTDIR, "package.json");
+const packageJsonContent = fs.readJSONSync(packageJsonPath);
+export const VERSION = packageJsonContent.version ?? "1.0.0";
 
 export function getTemplateDir() {
   const distPath = path.dirname(distUrl);
