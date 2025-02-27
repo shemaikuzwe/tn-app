@@ -1,3 +1,5 @@
+import type { UserPackageManager } from "./package-manager";
+
 const Orm = [
   {
     value: <"drizzle" | "prisma">"drizzle",
@@ -68,7 +70,9 @@ const config = {
   name: "new-app",
   db: null as null | "postgres" | "neon-postgres" | "vercel-postgres",
   t3Env: false,
+  install: true,
+  pkg: null as UserPackageManager | null,
 };
 
 export type Config = typeof config;
-export { Orm as ormOptions, config, db as dbOptions,auth as authOptions };
+export { Orm as ormOptions, config, db as dbOptions, auth as authOptions };

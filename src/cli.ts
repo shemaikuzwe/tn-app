@@ -10,8 +10,6 @@ import { installDependencies } from "./utils/installDeps.ts";
 import { createDir, getCurrentDir } from "./utils/fs.ts";
 import { copyFiles } from "./installer/index.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
-import { logger } from "./utils/logger.ts";
-
 export async function noaCli(defaults: Config) {
   if (defaults.directory == null) {
     const project = await p.text({
@@ -69,16 +67,18 @@ export async function noaCli(defaults: Config) {
     }
     defaults.auth = auth;
   }
-  const shadcn = await p.confirm({
-    message: "Would you like to initiliaze shadcn ui?",
-    initialValue: false,
-  });
-  if (p.isCancel(shadcn)) {
-    p.outro(chalk.yellow("Setup cancelled. See you later!"));
-    process.exit(0);
+  if (!defaults.shadcn) {
+    const shadcn = await p.confirm({
+      message: "Would you like to initialize shadcn ui?",
+      initialValue: false,
+    });
+    if (p.isCancel(shadcn)) {
+      p.outro(chalk.yellow("Setup cancelled. See you later!"));
+      process.exit(0);
+    }
+    defaults.shadcn = shadcn;
   }
-  defaults.shadcn = shadcn;
-  if (defaults.auth || defaults.orm) {
+  if (!defaults.t3Env && (defaults.auth || defaults.orm)) {
     const t3Env = await p.confirm({
       message: "Would you like to use t3-env?",
       initialValue: false,
@@ -91,11 +91,13 @@ export async function noaCli(defaults: Config) {
   }
   await copyFiles(defaults);
   const pkg = getUserPackageManger();
-  const shouldProceed = await p.confirm({
-    message: `Do you want to proceed with ${pkg} install?`,
-  });
-  if (shouldProceed) {
-    await installDependencies(defaults.directory, pkg);
+  if (defaults.install) {
+    const install = await p.confirm({
+      message: `Do you want to proceed with ${pkg} install?`,
+    });
+    if (install) {
+      await installDependencies(defaults.directory, pkg);
+    }
   }
   p.outro(chalk.green("Project setup success!"));
   process.exit(0);

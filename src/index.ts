@@ -6,11 +6,10 @@ import { noaCli } from "./cli";
 import { createDir } from "./utils/fs";
 import * as p from "@clack/prompts";
 import chalk from "chalk";
-import { logger } from "./utils/logger";
 import { VERSION } from "./template";
+import { getUserPackageManger } from "./utils/package-manager";
 async function main() {
   const program = new Command();
-  p.intro(chalk.bgBlue("TN-APP"));
   program
     .version(VERSION, "-V,--v", "Output the current version of create-tn-app")
     .name("tn-app")
@@ -22,18 +21,19 @@ async function main() {
       "-O, --orm <value>",
       "initialize with prisma or drizzle ORM installed"
     )
+    .option("-S,--shadcn", "Initialize  with shadcn ui installed")
     .option(
-      "-S,--shadcn <boolean>",
-      "Initialize  with shadcn ui installed",
-      false
+      "-D, --db <value>",
+      "Initialize with Database installed eg: postgres"
     )
-    .option("-D --db <value>", "Initialize with Database installed ")
     .option(
-      "-A,--authjs <boolean>",
-      "Initialize  with Auth js installed",
-      false
-    );
-
+      "-A,--auth <value>",
+      "Initialize  with Auth installed eg auth_js ",
+      undefined
+    )
+    .option("--no-install", "Skip installation process")
+    .option("--t3-env", "Initialize with t3-env installed")
+    .option("--use <package-manager>", "Explicitly specify npm, pnpm, or bun");
   let parsed: any;
 
   try {
@@ -48,7 +48,7 @@ async function main() {
       }
     }
     config.shadcn = options.shadcn;
-    config.authjs = options.authjs;
+    config.auth = options.auth == "auth_js" ? "auth_js" : null;
     config.orm =
       options.orm == "prisma"
         ? "prisma"
@@ -63,6 +63,17 @@ async function main() {
         : options.db == "vercel-postgres"
         ? "vercel-postgres"
         : null;
+    config.t3Env = options.t3Env;
+    config.install = options.install;
+    // options.use == "npm"
+    //   ? config.pkg == "npm"
+    //   : options.use == "bun"
+    //   ? config.pkg == "bun"
+    //   : options.use == "pnpm"
+    //   ? config.pkg == "pnpm"
+    //   : options.use == "yarn" && config.pkg == "yarn";
+    // p.intro(chalk.bgBlue("TN-APP"));
+    
     await noaCli(config);
   } catch (error) {
     console.error("Error:", error);
