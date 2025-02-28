@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm ci
+      - run: bun install
       - run: npm test
       - uses: JS-DevTools/npm-publish@v3
         with:
