@@ -1,48 +1,48 @@
-name: Publish to npm
+name: Publish & Create Release
 
 on:
+  # Runs whenever you push a tag starting with "v" (e.g. v1.0.0)
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: write  # Needed to create GitHub releases
 
 jobs:
-  release:
+  publish_and_release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Adjust Node version as needed
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
 
-      - name: Install Bun
-        run: npm i -g bun
+      
+      - run: npm i -g bun
 
-      - name: Install dependencies
-        run: bun install
+      # Optional: Build step (if you have a build script)
+      - name: Build
+        run: bun run build
 
-      - name: Publish package
+      # Publish to npm
+      - name: Publish to npm
         run: bun publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Create Release
-        id: create_release
-        uses: comnoco/create-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Create a GitHub Release with auto-generated notes
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
+          name: Release ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
