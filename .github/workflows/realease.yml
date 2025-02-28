@@ -25,13 +25,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Bump version (if needed)
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          npm version patch -m "Release v%s [skip ci]"
-          git push origin main --follow-tags
-
       - name: Publish package
         run: npm publish
         env:
