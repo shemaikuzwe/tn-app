@@ -26,12 +26,11 @@ jobs:
 
       
       - run: npm i -g bun
-
-      # Optional: Build step (if you have a build script)
+      - run: bun install 
+  
       - name: Build
         run: bun run build
-
-      # Publish to npm
+  
       - name: Publish to npm
         run: bun publish
         env:

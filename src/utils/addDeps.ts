@@ -50,4 +50,8 @@ export async function addScripts(
       };
     }
   }
+  const sorted = sortPackageJson(pkgJson);
+  fs.writeJSONSync(path.join(projectDir, "package.json"), sorted, {
+    spaces: 2,
+  });
 }
