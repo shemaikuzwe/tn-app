@@ -1,11 +1,15 @@
 import * as p from "@clack/prompts";
 import chalk from "chalk";
-import { dbOptions, ormOptions, type Config } from "./utils/data.ts";
+import {
+  authOptions,
+  dbOptions,
+  ormOptions,
+  type Config,
+} from "./utils/data.ts";
 import { installDependencies } from "./utils/installDeps.ts";
 import { createDir, getCurrentDir } from "./utils/fs.ts";
 import { copyFiles } from "./installer/index.ts";
 import { getUserPackageManger } from "./utils/package-manager.ts";
-import { logger } from "./utils/logger.ts";
 export async function noaCli(defaults: Config) {
   if (defaults.directory == null) {
     const project = await p.text({
@@ -51,41 +55,50 @@ export async function noaCli(defaults: Config) {
     }
     defaults.db = Db;
   }
+  if (!defaults.auth) {
+    const auth = await p.select({
+      message: "which Auth  would you like to use",
+      options: authOptions,
+    });
 
-  const features = await p.multiselect({
-    message: "Select additional libraries:",
-    options: [
-      { value: "shadcn_ui", label: "Shadcn ui", hint: "Ui Library" },
-      {
-        value: "auth_js",
-        label: "Auth js",
-        hint: "Authentication  Library",
-      },
-    ],
-    required: false,
-    initialValues: [
-      defaults.shadcn ? "shadcn_ui" : undefined,
-      defaults.authjs ? "auth_js" : undefined,
-    ],
-  });
-
-  if (p.isCancel(features)) {
-    p.outro(chalk.yellow("Setup cancelled. See you later!"));
-    process.exit(0);
+    if (p.isCancel(auth)) {
+      p.outro(chalk.yellow("Setup cancelled. See you later!"));
+      process.exit(0);
+    }
+    defaults.auth = auth;
   }
-  const selectFeatures = features.filter(Boolean);
-  defaults.authjs = selectFeatures.includes("auth_js");
-  defaults.shadcn = selectFeatures.includes("shadcn_ui");
-
+  if (!defaults.shadcn) {
+    const shadcn = await p.confirm({
+      message: "Would you like to initialize shadcn ui?",
+      initialValue: false,
+    });
+    if (p.isCancel(shadcn)) {
+      p.outro(chalk.yellow("Setup cancelled. See you later!"));
+      process.exit(0);
+    }
+    defaults.shadcn = shadcn;
+  }
+  if (!defaults.t3Env && (defaults.auth || defaults.orm)) {
+    const t3Env = await p.confirm({
+      message: "Would you like to use t3-env?",
+      initialValue: false,
+    });
+    if (p.isCancel(t3Env)) {
+      p.outro(chalk.yellow("Setup cancelled. See you later!"));
+      process.exit(0);
+    }
+    defaults.t3Env = t3Env;
+  }
   await copyFiles(defaults);
   const pkg = getUserPackageManger();
-  const shouldProceed = await p.confirm({
-    message: `Do you want to proceed with ${pkg} install?`,
-  });
-  if (shouldProceed) {
-    await installDependencies(defaults.directory, pkg);
+  if (defaults.install) {
+    const install = await p.confirm({
+      message: `Do you want to proceed with ${pkg} install?`,
+    });
+    if (install) {
+      await installDependencies(defaults.directory, pkg);
+    }
   }
-
-  logger.success("project setup success");
+  p.outro(chalk.green("Project setup success!"));
   process.exit(0);
 }

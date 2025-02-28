@@ -1,11 +1,11 @@
 {
   "name": "tn-app",
   "module": "dist/index.js",
-  "private": "true",
   "type": "module",
   "main": "dist/index.js",
-  "version": "0.0.4",
+  "version": "0.1.1",
   "license": "MIT",
+  "description": "create-TN app is the best way to create Next js app",
   "exports": "./dist/index.js",
   "bin": {
     "create-tn-app": "dist/index.js"
@@ -16,7 +16,10 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "package.json",
+    "README.md",
+    "LICENSE"
   ],
   "devDependencies": {
     "@types/bun": "latest",
@@ -37,7 +40,21 @@
     "type-fest": "^4.34.1",
     "url": "^0.11.4"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/" 
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shemaikuzwe/tn-app"
+  },
+  "keywords": [
+    "create-tn-app",
+    "tn-app",
+    "next.js",
+    "shadcn",
+    "next-auth",
+    "typescript",
+    "prisma",
+    "drizzle"
+  ],
+  "bugs": {
+    "url": "https://github.com/shemaikuzwe/tn-app/issues"
   }
 }

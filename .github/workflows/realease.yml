@@ -1,0 +1,48 @@
+name: Publish & Create Release
+
+on:
+  # Runs whenever you push a tag starting with "v" (e.g. v1.0.0)
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write  # Needed to create GitHub releases
+
+jobs:
+  publish_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          # Adjust Node version as needed
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
+
+      
+      - run: npm i -g bun
+
+      # Optional: Build step (if you have a build script)
+      - name: Build
+        run: bun run build
+
+      # Publish to npm
+      - name: Publish to npm
+        run: bun publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Create a GitHub Release with auto-generated notes
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

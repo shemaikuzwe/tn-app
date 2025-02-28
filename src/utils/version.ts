@@ -1,6 +1,5 @@
 import { execa } from "execa";
 import { logger } from "./logger";
-
 async function getLatestVersion(packageName: string) {
   try {
     const result = await execa("npm", ["view", packageName, "version"]);
@@ -10,7 +9,6 @@ async function getLatestVersion(packageName: string) {
     process.exit(1);
   }
 }
-
 export const depsVersion = {
   // NextAuth.js
   "next-auth": "5.0.0-beta.25",
@@ -34,5 +32,9 @@ export const depsVersion = {
   clsx: "^2.1.1",
   "class-variance-authority": "^0.7.1",
   "@radix-ui/react-slot": "^1.1.1",
+
+  //t3env
+  "@t3-oss/env-nextjs":"^0.12.0",
+  "zod":"^3.24.2"
 } as const;
 export type Deps = keyof typeof depsVersion;

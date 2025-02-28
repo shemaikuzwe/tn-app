@@ -78,6 +78,6 @@ export const installDependencies = async (
     stderr: "inherit",
   });
   spinner.stop();
-  logger.success("project setup success");
+  p.outro(chalk.green("Project setup success!"));
   process.exit(0);
 };

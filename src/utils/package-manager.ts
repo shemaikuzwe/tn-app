@@ -1,9 +1,11 @@
+import { config } from "./data";
+
 async function sleep(time: number) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 export type UserPackageManager = "npm" | "pnpm" | "yarn" | "bun";
-const getUserPackageManger = ():UserPackageManager => {
+const getUserPackageManger = (): UserPackageManager => {
   const userAgent = process.env.npm_config_user_agent;
   if (userAgent) {
     if (userAgent.startsWith("yarn")) {
