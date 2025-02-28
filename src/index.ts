@@ -7,7 +7,6 @@ import { createDir } from "./utils/fs";
 import * as p from "@clack/prompts";
 import chalk from "chalk";
 import { VERSION } from "./template";
-import { getUserPackageManger } from "./utils/package-manager";
 async function main() {
   const program = new Command();
   program
@@ -33,7 +32,7 @@ async function main() {
     )
     .option("--no-install", "Skip installation process")
     .option("--t3-env", "Initialize with t3-env installed")
-    .option("--use <package-manager>", "Explicitly specify npm, pnpm, or bun");
+    // .option("--use <package-manager>", "Explicitly specify npm, pnpm, or bun");
   let parsed: any;
 
   try {
