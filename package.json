@@ -1,11 +1,11 @@
 {
-  "name": "tn-app",
+  "name": "create-tn-app",
   "module": "dist/index.js",
   "type": "module",
   "main": "dist/index.js",
   "version": "0.1.1",
   "license": "MIT",
-  "description": "create-TN app is the best way to create Next js app",
+  "description": "create-tn app is the best way to create Next js app",
   "exports": "./dist/index.js",
   "bin": {
     "create-tn-app": "dist/index.js"

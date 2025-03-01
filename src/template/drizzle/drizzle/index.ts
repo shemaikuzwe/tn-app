@@ -1,7 +1,6 @@
 import { drizzle } from "drizzle-orm/neon-http";
-import * as schema from "@/drizzle/index.ts";
-
-const db = drizzle(process.env.DATABASE_URL!, { schema });
+import { neon } from "@neondatabase/serverless";
+import * as schema from "@/drizzle/schema";
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle(sql);
 type User = typeof schema.users.$inferSelect;
-
-export { db, User };
