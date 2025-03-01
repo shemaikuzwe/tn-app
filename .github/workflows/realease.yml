@@ -37,8 +37,7 @@ jobs:
 
       - name: Build
         run: bun run build
-
-      # Publish to npm
+  
       - name: Publish to npm
         run: bun publish --no-git-checks
         env:

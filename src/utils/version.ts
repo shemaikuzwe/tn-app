@@ -18,8 +18,6 @@ export const depsVersion = {
   // Prisma
   prisma: "^5.14.0",
   "@prisma/client": "^5.14.0",
-  "@prisma/adapter-planetscale": "^5.14.0",
-
   // Drizzle
   "drizzle-kit": "^0.24.0",
   "drizzle-orm": "^0.33.0",
@@ -34,7 +32,7 @@ export const depsVersion = {
   "@radix-ui/react-slot": "^1.1.1",
 
   //t3env
-  "@t3-oss/env-nextjs":"^0.12.0",
-  "zod":"^3.24.2"
+  "@t3-oss/env-nextjs": "^0.12.0",
+  zod: "^3.24.2",
 } as const;
 export type Deps = keyof typeof depsVersion;

@@ -5,10 +5,12 @@ import path from "path";
 
 export async function drizzleInstaller(
   projectDir: string,
-  db: "postgres" | "neon-postgres" | "vercel-postgres" | null
+  db: "postgres" | "neon-postgres" | "vercel-postgres" | null,
+  t3: boolean,
+  auth:boolean
 ) {
   const { drizzle } = getTemplateDir();
-  
+
   // Read template files
   const drizzleIndexPath = path.join(drizzle, "drizzle", "index.ts");
   const drizzleSchemaPath = path.join(drizzle, "drizzle", "schema.ts");
@@ -23,8 +25,7 @@ export async function drizzleInstaller(
   try {
     // Create drizzle directory
     await fs.ensureDir(destDrizzleDir);
-
-    // Read and modify drizzle index file
+    let configContent = await fs.readFile(drizzleConfigPath, "utf-8");
     let drizzleContent = await fs.readFile(drizzleIndexPath, "utf-8");
     drizzleContent = drizzleContent.replace(
       'import { drizzle } from "drizzle-orm/neon-http";',
@@ -34,12 +35,31 @@ export async function drizzleInstaller(
         ? 'import { drizzle } from "drizzle-orm/neon-http";'
         : 'import { drizzle } from "drizzle-orm/vercel-postgres";'
     );
-
+    if (t3) {
+      configContent = configContent.replace(
+        /^(import.*;\n)/,
+        `$1import { env } from '@/env';\n`
+      );
+      drizzleContent = drizzleContent.replace(
+        /^(import.*;\n)/,
+        `$1import { env } from '@/env';\n`
+      );
+      configContent = configContent.replace(
+        "process.env.DATABASE_URL!",
+        "env.DATABASE_URL"
+      );
+      drizzleContent = drizzleContent.replace(
+        "process.env.DATABASE_URL!",
+        "env.DATABASE_URL"
+      );
+    }
     // Write modified files
     await fs.writeFile(destIndexPath, drizzleContent, "utf-8");
     await fs.copy(drizzleSchemaPath, destSchemaPath);
-    await fs.copy(drizzleConfigPath, destConfigPath);
-
+    await fs.writeFile(destConfigPath, configContent, "utf-8");
+     if(auth){
+       await addDeps(["@auth/prisma-adapter"], false, projectDir);
+     }
     // Install dependencies
     await addDeps(["drizzle-orm"], false, projectDir);
     await addDeps(["drizzle-kit"], true, projectDir);
@@ -53,7 +73,6 @@ export async function drizzleInstaller(
 
     // Add drizzle scripts
     await addScripts(projectDir, "drizzle");
-
   } catch (error) {
     console.error("Error installing drizzle:", error);
     throw error;

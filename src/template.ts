@@ -1,7 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "node:url";
 import fs from "fs-extra";
-const distUrl = fileURLToPath(import.meta.resolve("tn-app"));
+const distUrl = fileURLToPath(import.meta.resolve("create-tn-app"));
 export const ROOTDIR = path.join(distUrl, "../../");
 const packageJsonPath = path.join(ROOTDIR, "package.json");
 const packageJsonContent = fs.readJSONSync(packageJsonPath);
