@@ -7,12 +7,11 @@ on:
       - "v*"
 
 permissions:
-  contents: write  # Needed to create GitHub releases
+  contents: write # Needed to create GitHub releases
 
 jobs:
   publish_and_release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -24,18 +23,26 @@ jobs:
           node-version: "18"
           registry-url: "https://registry.npmjs.org"
 
-      
-      - run: npm i -g bun
+      - name: Install Bun
+        run: npm i -g bun
 
-      # Optional: Build step (if you have a build script)
+      - name: Setup npm authentication
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install dependencies
+        run: bun install
+
       - name: Build
         run: bun run build
 
       # Publish to npm
       - name: Publish to npm
-        run: bun publish
+        run: bun publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # Create a GitHub Release with auto-generated notes
       - name: Create GitHub Release
