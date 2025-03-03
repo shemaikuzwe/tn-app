@@ -7,7 +7,7 @@ export async function drizzleInstaller(
   projectDir: string,
   db: "postgres" | "neon-postgres" | "vercel-postgres" | null,
   t3: boolean,
-  auth:boolean
+  auth: boolean
 ) {
   const { drizzle } = getTemplateDir();
 
@@ -15,12 +15,13 @@ export async function drizzleInstaller(
   const drizzleIndexPath = path.join(drizzle, "drizzle", "index.ts");
   const drizzleSchemaPath = path.join(drizzle, "drizzle", "schema.ts");
   const drizzleConfigPath = path.join(drizzle, "drizzle.config.ts");
-
+  const withAUthPath = path.join(drizzle, "drizzle", "with-auth.ts");
   // Create destination paths
   const destDrizzleDir = path.join(projectDir, "drizzle");
   const destIndexPath = path.join(destDrizzleDir, "index.ts");
   const destSchemaPath = path.join(destDrizzleDir, "schema.ts");
   const destConfigPath = path.join(projectDir, "drizzle.config.ts");
+  const destWithAUth = path.join(destDrizzleDir, "schema.ts");
 
   try {
     // Create drizzle directory
@@ -55,11 +56,13 @@ export async function drizzleInstaller(
     }
     // Write modified files
     await fs.writeFile(destIndexPath, drizzleContent, "utf-8");
-    await fs.copy(drizzleSchemaPath, destSchemaPath);
     await fs.writeFile(destConfigPath, configContent, "utf-8");
-     if(auth){
-       await addDeps(["@auth/prisma-adapter"], false, projectDir);
-     }
+    if (auth) {
+      await fs.copy(withAUthPath, destWithAUth);
+      await addDeps(["@auth/prisma-adapter"], false, projectDir);
+    } else {
+      await fs.copy(drizzleSchemaPath, destSchemaPath);
+    }
     // Install dependencies
     await addDeps(["drizzle-orm"], false, projectDir);
     await addDeps(["drizzle-kit"], true, projectDir);

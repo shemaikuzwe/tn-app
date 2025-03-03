@@ -19,9 +19,14 @@ export async function copyFiles(defaults: Config) {
 
   if (defaults.orm === "prisma") await prismaInstaller(defaults.directory);
   if (defaults.orm === "drizzle") {
-    await drizzleInstaller(defaults.directory, defaults.db,defaults.t3Env);
+    await drizzleInstaller(
+      defaults.directory,
+      defaults.db,
+      defaults.t3Env,
+      !!defaults.auth
+    );
   }
-  if (defaults.auth) await authInstaller(defaults.directory);
+  if (defaults.auth) await authInstaller(defaults.directory,defaults.orm);
   if (defaults.shadcn) await shadcnInstaller(defaults.directory);
   if (defaults.auth || defaults.orm) {
     if (defaults.t3Env)
@@ -29,7 +34,7 @@ export async function copyFiles(defaults: Config) {
         db: !!defaults.db,
         auth: !!defaults.auth,
       });
-    await envInstaller(defaults.directory,{
+    await envInstaller(defaults.directory, {
       db: !!defaults.db,
       auth: !!defaults.auth,
     });
